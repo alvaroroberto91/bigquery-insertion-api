@@ -1,5 +1,7 @@
 # BigQuery Populate API
 
+> This application performs batch insertions into BigQuery
+
 ## How to use
 
 ### Credentials Configurantion
@@ -13,8 +15,7 @@
 
 ### Header and Body of Request
 ```sh
-1 - In the request header you must enter the "headerTableName" parameter.
-    It will contain the name of the table that will be populated in BigQuery
+1 - In the request header you must enter the "headerTableName" parameter. It will contain the name of the table that will be populated in BigQuery
 2 - The body of the request must contain an array of objects similar to the one shown below
     PS.: The parameters contained in the object array will depend on the data you will insert. So, fill it in according to your needs.
 ```
@@ -29,18 +30,18 @@ Method: POST
 ```json
 [
     {
-        "Name": "Teste",
-        "PhoneNumber": "12213123",
-        "EmailAddress": "email@email.com",
+        "Name": "John Doe 1",
+        "PhoneNumber": "88888888888",
+        "EmailAddress": "email1@email1.com",
         "isActive": true,
         "Channel": "WhatsApp"
     },
     {
-        "Name": "Teste",
-        "PhoneNumber": "12213123",
-        "EmailAddress": "email@email.com",
-        "isActive": true,
-        "Channel": "WhatsApp"
+        "Name": "John Doe 2",
+        "PhoneNumber": "99999999999",
+        "EmailAddress": "email2@email2.com",
+        "isActive": false,
+        "Channel": "Messenger"
     }
 ]
 ```
