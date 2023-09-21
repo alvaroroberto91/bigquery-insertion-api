@@ -1,6 +1,6 @@
-const {
-    BigQuery
-} = require('@google-cloud/bigquery');
+const { setRedisFunction } = require('../utils/redis');
+const { BigQuery } = require('@google-cloud/bigquery');
+
 
 const bigQuery = new BigQuery({
     keyFilename: process.env.KEY_FILENAME,
@@ -8,11 +8,10 @@ const bigQuery = new BigQuery({
 });
 const dataSetId = process.env.DATASET_ID;
 
-
 exports.PopulateBigQueryController = async (request, response) => {
     const tableId = request.headers['headertablename'];
+    const dataToInsert = request.body;
     try {
-        const dataToInsert = request.body;
         console.log(`Batch received for insertion. Table Name: ${tableId}`);
 
         await bigQuery
@@ -25,6 +24,7 @@ exports.PopulateBigQueryController = async (request, response) => {
 
     } catch (error) {
         console.error(`Error during batch insertion. Table Name: ${tableId}. Error Message: ${error.message}`);
+        await setRedisFunction("dataWithError", dataToInsert);
         response.status(400).json({
             error: `Error during batch insertion. Table Name: ${tableId}`,
             message: error.message
